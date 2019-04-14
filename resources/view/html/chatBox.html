@@ -1,0 +1,68 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Chat Box</title>
+    <meta name="description" content="chat">
+    <meta name="author" content="web-o-bot">
+
+
+    <link rel="stylesheet" type="text/css" href="./chatBox.css">
+
+</head>
+
+<body>
+
+    <div>
+        <div>
+            <h1>Chat Box</h1>
+        </div>
+
+        <div class="live-peers">
+            <div>
+                <select name="peers" size="5" multiple>
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="show-chat">
+            <div>
+                <table>
+                    <tr>
+                        <th>Message</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Timestamp</th>
+                    </tr>
+
+                {{range .}}
+                    <tr>
+                        <td>{{.Message}}</td>
+                        <td>{{.From}}</td>
+                        <td>{{.To}}</td>
+                        <td>{{.Timestamp}}</td>
+                    </tr>
+                {{end}}
+
+                </table>
+            </div>
+        </div>
+
+        <div class="text-bar">
+            <form action="/chat" method="post"> <!--class="text-bar__field" id="form-message"-->
+                <input name="message" type="text" placeholder="having a good day ?"/>
+                <input type="submit" value="submit" />
+            </form>
+        </div>
+
+    </div>
+
+<!--<script src="../js/chatBox.js"></script>-->
+</body>
+</html>
