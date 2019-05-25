@@ -14,16 +14,24 @@ type Routes []Route
 var routes = Routes{
 	Route{
 		Method:      "GET",
-		Path:        "/hello",
-		Name:        "hello",
-		HandlerFunc: Hello,
+		Path:        "/start",
+		Name:        "start",
+		HandlerFunc: Start,
+	},
+
+	Route{
+		Method:      "POST",
+		Path:        "/peers",
+		Name:        "peers",
+		HandlerFunc: PeersAlive,
 	},
 	Route{
 		Method:      "GET",
-		Path:        "/wit",
-		Name:        "wit/{textInput}",
-		HandlerFunc: Wit,
+		Path:        "/peers",
+		Name:        "peers",
+		HandlerFunc: PeersAlive,
 	},
+
 	Route{
 		Method:      "GET",
 		Path:        "/chat",
@@ -42,28 +50,17 @@ var routes = Routes{
 		Name:        "chatRecv",
 		HandlerFunc: ChatBeatRecv,
 	},
-	//Route{
-	//	Method:      "GET",
-	//	Path:        "/chat/show",
-	//	Name:        "chatShow",
-	//	HandlerFunc: ChatShow,
-	//},
+
 	Route{
 		Method:      "GET",
-		Path:        "/start",
-		Name:        "start",
-		HandlerFunc: Start,
-	},
-	Route{
-		Method:      "POST",
-		Path:        "/peers",
-		Name:        "peers",
-		HandlerFunc: PeersAlive,
+		Path:        "/hello",
+		Name:        "hello",
+		HandlerFunc: Hello,
 	},
 	Route{
 		Method:      "GET",
-		Path:        "/peers",
-		Name:        "peers",
-		HandlerFunc: PeersAlive,
+		Path:        "/wit",
+		Name:        "wit/{textInput}",
+		HandlerFunc: Wit,
 	},
 }

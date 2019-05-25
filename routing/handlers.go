@@ -6,6 +6,8 @@ import (
 
 	//"net"
 	"../chat"
+	"flag"
+
 	//"bytes"
 	"fmt"
 	"os"
@@ -27,6 +29,8 @@ var DeletedPeersDS peers.Peers
 
 var idDS identity.Identity
 
+var root = flag.String("root", ".", "file system path")
+
 func init() {
 
 	var w http.ResponseWriter
@@ -38,9 +42,16 @@ func init() {
 
 func Start(w http.ResponseWriter, r *http.Request) { //we take responsewriter and *request as parameter
 
+	id := ""
+	if len(os.Args) == 1 {
+		id = "8080"
+	} else {
+		id = os.Args[1]
+	}
+
 	idDS = identity.Identity{
-		Id:   os.Args[1],
-		Addr: "localhost:" + os.Args[1],
+		Id:   id,
+		Addr: "localhost:" + id,
 	}
 
 	PeersDS = peers.NewPeers()

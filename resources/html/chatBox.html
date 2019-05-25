@@ -1,0 +1,97 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Chat Box</title>
+    <meta name="description" content="chat">
+    <meta name="author" content="web-o-bot">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/chatBox.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="row alert alert-dark" role="alert">
+            <h1 class="header"><b>Chat Box - {{.IdDS.Id}}</b></h1>
+        </div>
+
+        <div class="row input-bar alert">
+
+            <form action="/chat" enctype="multipart/form-data" method="post">
+                <!--enctype="multipart/form-data"-->
+                <!--enctype="application/x-www-form-urlencoded"-->
+                <div class="row">
+                <div class="col">
+                    <div class="live-peers">
+                    <select name="peers" size="5" multiple>
+                        {{range $key, $value := .PeersDS.PeerMap }}
+                            <option value="{{ $key }}">{{ $key }}</option>
+                        {{end}}
+                    </select>
+                </div>
+                </div>
+                <div class="col">
+                    <div class="text-bar">
+                        <input name="message" type="text" placeholder="having a good day ?"/>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="file-bar">
+                    <input type="file" name="uploadfile" />
+                </div>
+                </div>
+                <div class="col">
+                    <div class="submit-bar">
+                    <!--<input type="submit" value="submit" />-->
+                    <button type="submit" value="submit" class="btn btn-success">Submit</button>
+                </div>
+                </div>
+                </div>
+            </form>
+
+        </div>
+
+        <!--<div class="container">-->
+            <div class="row"> <!-- show-chat -->
+                <div class="col-sm-6 alert alert-primary" role="alert"><b>Message</b></div>
+                <div class="col-sm-3 alert alert-primary" role="alert"><b>File</b></div>
+                <div class="col alert alert-primary" role="alert"><b>From</b></div>
+                <div class="col alert alert-primary" role="alert"><b>To</b></div>
+                <!--<div class="col alert alert-primary" role="alert">Timestamp</div>-->
+
+                {{range .ChatsShow.ChatsShowList}}
+                    <div class="w-100"></div>
+                    <div class="col-sm-6 alert alert-info" style="margin-bottom: 0%">{{.Message}}</div>
+                    <div class="col-sm-3 alert alert-info" style="margin-bottom: 0%">{{.LoadedFileName}}</div>
+                    <div class="col alert alert-dark" style="margin-bottom: 0%">{{.From}}</div>
+                    <div class="col alert alert-dark" style="margin-bottom: 0%">{{.To}}</div>
+                    <!--   <div class="col alert alert-info" role="alert">{{.Timestamp}}</div> -->
+                {{end}}
+
+
+            </div>
+        <!--</div>-->
+
+    </div>
+
+    <script src="../../resources/js/chatBox.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

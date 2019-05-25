@@ -33,10 +33,11 @@ import (
 	"../peers"
 )
 
-const CHATFILESSENTDIR = "/chat/files/sent/"
-const CHATFILESRECVDIR = "/chat/files/recv/"
-const CHATFILEPREFIX = "/chat/files/chat-"
-const CHATBOXHTML = "/resources/view/html/chatBox.html"
+var CHATFILESSENTDIR = "/chat/files/" + "c" + os.Args[1] + "/sent/"
+var CHATFILESRECVDIR = "/chat/files/" + "c" + os.Args[1] + "/recv/"
+var CHATFILEPREFIX = "/chat/files/chat-"
+
+const CHATBOXHTML = "/resources/html/chatBox.html"
 
 var chatIdentity identity.Identity
 
