@@ -3,7 +3,7 @@ Application to be installed on every drone
 
 ### Features Included
 1. Decentralized
-2. Identity
+2. Identity & Peers
 3. ChatBox
 
 ### Features To be added
@@ -18,8 +18,9 @@ Application to be installed on every drone
 a. Each bot is a server and holds own memory for processing.
 b. Mechanism to know alive peers and identify dead peers by sending and receieving alive beats.
 
-#### 2. Identity
+#### 2. Identity & Peers
 a. Information of a bot on Peer network, like addr, etc
+b. Peers detection mechanism share alieve beat to other peers and also detects if a peer is down. 
 
 #### 3. Chatbox
 a. GET /chat    
