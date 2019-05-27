@@ -19,4 +19,5 @@ b. Mechanism to know alive peers and identify dead peers by sending and receievi
 
 #### 2. Chatbox
 a. API -> GET /chat
-   Opens a chat interface to send messages and files across to other peers.
+
+Opens a chat interface to send messages and files across to other peers.
