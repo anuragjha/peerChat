@@ -18,5 +18,6 @@ a. Each bot is a server and holds own memory for processing.
 b. Mechanism to know alive peers and identify dead peers by sending and receieving alive beats.
 
 #### 2. Chatbox
-a. API -> GET /chat
+a. GET /chat
+
 Opens a chat interface to send messages and files across to other peers.
