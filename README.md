@@ -1,7 +1,7 @@
 # web-o-bot
 Application to be installed on every drone
 
-### Features 
+### Features Included
 1. Decentralized
 2. ChatBox
 
