@@ -15,8 +15,7 @@ Application to be installed on every drone
 
 #### 1. Decentralized
 Each bot is a server and holds own memory for processing
-
-Mechanism to know alive peers and identify dead peers by sendinf alive beats.
+Mechanism to know alive peers and identify dead peers by sending and receieving alive beats.
 
 #### 2. Chatbox
 API
