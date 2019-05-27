@@ -27,6 +27,7 @@ b. Symetric Key for confidentiality (encryption-decryption).
 
 #### 4. Communication
 > Communication will be done in Beats. 
+
 Beats will contain among other things
 a. Message (M) will be encrypted with a new secret symetric key (Sk)
 b. Sk will be encrypted with Public Key of Peer (Pk)
