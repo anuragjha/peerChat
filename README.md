@@ -3,7 +3,8 @@ Application to be installed on every drone
 
 ### Features Included
 1. Decentralized
-2. ChatBox
+2. Identity
+3. ChatBox
 
 ### Features To be added
 3. Security
@@ -17,15 +18,18 @@ Application to be installed on every drone
 a. Each bot is a server and holds own memory for processing.
 b. Mechanism to know alive peers and identify dead peers by sending and receieving alive beats.
 
-#### 2. Chatbox
+#### 2. Identity
+a. Information of a bot on Peer network, like addr, etc
+
+#### 3. Chatbox
 a. GET /chat    
 > Opens a chat interface to send messages and files across to other peers.
 
-#### 3. Security
+#### 4. Security
 a. Public-Private Key for data authentication and integrity (signature).
 b. Symetric Key for confidentiality (encryption-decryption).
 
-#### 4. Communication
+#### 5. Communication
 > Communication will be done in Beats. 
 
 Beats will contain among other things ->      
