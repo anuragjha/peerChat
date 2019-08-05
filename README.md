@@ -2,7 +2,7 @@
 Peer to peer chat application
 
 ### Usage
-- go run main.go port
+- go run main.go <'port'>
 - /chat to open chatbox page
 
 
