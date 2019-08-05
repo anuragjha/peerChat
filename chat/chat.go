@@ -220,90 +220,19 @@ func (chatsShow *ChatsShow) initialize(inputFile *os.File) {
 	}
 }
 
-//func showChats(w http.ResponseWriter, identity identity.Identity, peerDS peers.Peers) {
-//
-//	//chats := returnChatJSONstoChats()
-//	fmt.Println("BEFORE starting SHOWCHAT")
-//
-//	showChats := returnChatJSONstoChatsWithoutLoadedFIle()
-//	fmt.Println("chats from returnChatJSONstoChatsWithoutLoadedFIle :", showChats)
-//
-//	page := NewChatPage(identity, peerDS, showChats)//
-//	fmt.Println("After generating CHAT PAGE")
-//
-//	cwd, _ := os.Getwd()
-//	chatBoxHtml := path.Join(cwd, CHATBOXHTML) //"/resources/view/html/chatBox.html")
-//	t, _ := template.ParseFiles(chatBoxHtml)
-//
-//	//_ = t.Execute(w, chats.Chats)
-//	_ = t.Execute(w, page)
-//	//t.ExecuteTemplate(w,"page", p)
-//
-//	fmt.Println("BEFORE Finishing SHOWCHAT")
-//}
-
-//func returnChatJSONstoChats() Chats {
-//	//cwd, _ := os.Getwd()
-//
-//	//chatId := getIdentity()
-//	//filename := cwd + CHATFILEPREFIX + chatId.Id +".txt"//"/chat/files/chat.txt"
-//	filename := getChatFIlePath()
-//
-//	inputFile, err := os.Open(filename)
-//	if err != nil {
-//		log.Println("Error in readChat() : err - ", err)
-//	}
-//
-//	chats := NewChats()
-//	chats.ChatList = make([]Chat, 0)
-//	chats.buildChatsShow(inputFile)
-//
-//	return chats
-//}
-
-//
-//func returnChatJSONstoChatsWithoutLoadedFIle() Chats {
-//	fmt.Println("BEFORE starting returnChatJSONstoChatsWithoutLoadedFIle")
-//	chats := returnChatJSONstoChats()
-//	for _, chat := range chats.ChatList {
-//		chat.LoadedFile = LoadedFile{}
-//	}
-//
-//	fmt.Println("Just Finishing returnChatJSONstoChatsWithoutLoadedFIle")
-//	return chats
-//}
-
-//func (chats *Chats) buildChatsShow(inputFile *os.File) {
-//	inputScanner := bufio.NewScanner(inputFile)
-//	inputScanner.Split(bufio.ScanLines) // Read until a newline for each Scan() (Default)
-//	for inputScanner.Scan() {
-//		//fmt.Println(inputScanner.Text())   // get the buffered content as string
-//		//fmt.Println(inputScanner.Bytes())  // same content as above but as []byte
-//		chatJSON := inputScanner.Text()
-//		chat := Chat{}
-//		jerr := json.Unmarshal([]byte(chatJSON), &chat)
-//		if jerr != nil {
-//			log.Println("Error while converting json to chat - err : ", jerr)
-//			continue
-//		}
-//		chats.ChatList = append(chats.ChatList, chat)
-//	}
-//
-//}
-
 // Called when a node sends a Chat object  - In Req body there is chat json
 // Chat struct
 // Continue func gets param - w, r, identity, peersDS
 // Continue func should do -
 // 0. save chat to local chat log
 // 1. parse recv Chat
-// 2.
 func Continue(w http.ResponseWriter, r *http.Request, identity identity.Identity, peerDS peers.Peers) {
 
 	//save the chat in req body - generated from submit of chatform
 	processChatFormSubmit(r, identity, peerDS)
 
-	showChatsShow(w, identity, peerDS)
+	//showChatsShow(w, identity, peerDS)
+	http.Redirect(w, r, "http://"+r.Host+"/chat", 301)
 }
 
 // processChatFormSubmit saves the chat form message to self folders - recv and update self chat-id.txt copy
@@ -343,16 +272,6 @@ func processChatFormSubmit(r *http.Request, identity identity.Identity, peerDS p
 		chatShow = NewChatShow(identity.Id, to, message, "")
 
 	} else {
-
-		//defer file.Close() //else if Loaded is present
-		//fmt.Printf("Uploaded File: %+v\n", handler.Filename)
-		//fmt.Printf("File Size: %+v\n", handler.Size)
-		//fmt.Printf("MIME Header: %+v\n", handler.Header)
-		//fileBytes, err = ioutil.ReadAll(file)
-		//if err != nil {
-		//	log.Println("Error in reading bytes to file : Error - ", err)
-		//}
-		//log.Println("FILEBYTES pre: ", fileBytes)
 
 		saveLoadedOnSubmit(file, handler)
 
@@ -472,107 +391,6 @@ func chatBeatingToAddress(peerAddr string, c Chat) {
 	}
 }
 
-//
-//func Continue(w http.ResponseWriter, r *http.Request, identity identity.Identity, peerDS peers.Peers) { //todo refactor
-//	// Continue - is called when user press submit method //
-//	//read message - present in req body
-//	err := r.ParseForm()
-//	if err != nil {
-//		log.Println("Err in chat : Cannot process form, error - ", err)
-//	}
-//
-//	   /////////////////////                     //  /// taking data from HTML form field
-//
-//	to := r.Form["peers"]
-//	if len(to) == 0 {
-//		to = []string{"All"}
-//	}
-//
-//	message := r.FormValue("message")
-//	//upload := r.ParseMultipartForm() //todo
-//
-//					// we want to save the file before sending client - saving  now !!!
-//	var c Chat // to be used in sed message !!
-//	var f *os.File
-//	file, handler, err := r.FormFile("uploadfile")
-//	if err != nil {
-//		log.Println("Error in Continue func - error : ", err)
-//		c = NewChat(identity, to, message, LoadedFile{}/*NewLoadedFile(fileName, fileBytes)*/)
-//
-//
-//	} else {
-//		defer file.Close()
-//		// !!! saving the file on chat file system
-//		f, err = os.OpenFile(CHATFILESSENTDIR+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
-//		if err != nil {
-//			fmt.Println("Error in ceating file to save in sent folder : err - ", err)
-//		} else {
-//			defer f.Close()
-//			_, _ = io.Copy(f, file)
-//			// closing taking data from HTML form field ///
-//
-//			fmt.Println("::::; handler.Header ::: - handler.Header :", handler.Header)
-//			fileName := handler.Filename
-//			fileBytes, err := ioutil.ReadAll(f)
-//			if err != nil {
-//				log.Println("Error in reading bytes to file : Error - ", err)
-//			}
-//
-//			c = NewChat(identity, to, message, NewLoadedFile(fileName, fileBytes))
-//		}
-//
-//	}
-//
-//
-//
-//// todo up and down
-//
-//	filehelp.SaveToFile(string(ChatToJSON(&c)), getChatFIlePath()) //saving here
-//
-//	//send message to particular nodes
-//	go SendMessage(c, to, peerDS) //
-//	//////
-//
-//	//Begin(w, r, identity, peerDS)
-//	showChatsShow(w, identity, peerDS)
-//
-//
-//
-//}
-
-//func SendMessage(c Chat, to []string, peersDS peers.Peers) { //send to peer or all
-//
-//	var addrToSend []string
-//	for id, peer := range peersDS.PeerMap {
-//		for _, t := range to {
-//			if id == t {
-//				addrToSend = append(addrToSend, peer.Addr)
-//			}
-//		}
-//	}
-//
-//
-//	if len(addrToSend) == 0 {  // to ALL
-//		c.To = []string{"All"}
-//		for _, peer := range peersDS.PeerMap {
-//			fmt.Println("in SendMessage ChatToJSON(&c) --  all peers ------>  ", ChatToJSON(&c))
-//			_, err := http.Post("http://"+peer.Addr+"/chat/recv", "json", bytes.NewBuffer([]byte(ChatToJSON(&c))))
-//			if err != nil {
-//				log.Println("Error in Send Message : ", err)
-//			}
-//		}
-//	} else {  // to
-//		for _, addr := range addrToSend {
-//			fmt.Println("in SendMessage ChatToJSON(&c) --  directed peers ------>  ", ChatToJSON(&c))
-//			_, err := http.Post("http://"+addr+"/chat/recv", "json", bytes.NewBuffer([]byte(ChatToJSON(&c))))
-//			if err != nil {
-//				log.Println("Error in Send Message : ", err)
-//			}
-//		}
-//	}
-//
-//}
-
 // Receives ChatBeat
 func BeatRecv(w http.ResponseWriter, r *http.Request, identity identity.Identity, peerDS peers.Peers) { //receieve chatbeat from peers
 
@@ -610,65 +428,3 @@ func saveLoadedFile(name string, data []byte) {
 	f.Write(data)
 
 }
-
-//func ShowChatFile(w http.ResponseWriter, r *http.Request) {
-//
-//	chats := returnChatJSONstoChats()
-//	chats.displayChats(w, r)
-//
-//}
-
-//func (chats *Chats) displayChats(w http.ResponseWriter, r *http.Request) {
-//
-//	//log := ""
-//	for _, chat := range chats.ChatList {
-//		_, _ = fmt.Fprint(w, chat.Message+"\n")
-//		//chat.Message+"\t\t\ttime:"+chat.Timestamp.String()+"\n")
-//	}
-//
-//}
-
-/////////////////////////////////
-
-//func createChatsFile(filename string) {
-//
-//	var file, err = os.Create(filename)
-//	if err != nil {
-//		log.Println("Chat file not present also Cannot create chat file : err - ", err)
-//		return
-//	}
-//	defer file.Close()
-//}
-
-//internal func
-
-//func ChatToJSON(c *Chat) []byte {
-//	j, _ := json.Marshal(c)
-//	return j
-//}
-//
-//func JSONToChat(b []byte) Chat {
-//	c := Chat{}
-//	jerr := json.Unmarshal(b, &c)
-//	if jerr != nil {
-//		log.Println("Error in unmarshalling json to Chat - err : ", jerr)
-//	}
-//
-//	return c
-//}
-//
-//
-//func ChatShowToJSON(c *ChatShow) []byte {
-//	j, _ := json.Marshal(c)
-//	return j
-//}
-//
-//func JSONToChatShow(b []byte) ChatShow {
-//	c := ChatShow{}
-//	jerr := json.Unmarshal(b, &c)
-//	if jerr != nil {
-//		log.Println("Error in unmarshalling json to Chat - err : ", jerr)
-//	}
-//
-//	return c
-//}

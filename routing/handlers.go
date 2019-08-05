@@ -7,6 +7,7 @@ import (
 	//"net"
 	"../chat"
 	"flag"
+	"golang.org/x/mobile/example/web-o-bot/witai"
 
 	//"bytes"
 	"fmt"
@@ -18,7 +19,6 @@ import (
 
 	"../identity"
 	"../peers"
-	"../witai"
 	"net/http"
 )
 
@@ -40,6 +40,7 @@ func init() {
 
 }
 
+// inital startup function
 func Start(w http.ResponseWriter, r *http.Request) { //we take responsewriter and *request as parameter
 
 	id := ""
@@ -69,6 +70,7 @@ func Start(w http.ResponseWriter, r *http.Request) { //we take responsewriter an
 
 }
 
+/* peer dicovery start */
 func SendAliveBeat() {
 	for true {
 		peers.SendAliveBeat(idDS, &PeersDS, &DeletedPeersDS)
@@ -87,12 +89,9 @@ func PeersAlive(w http.ResponseWriter, r *http.Request) { //we take responsewrit
 
 }
 
-func Wit(w http.ResponseWriter, r *http.Request) { //we take responsewriter and *request as parameter
+/* peer dicovery over */
 
-	witai.Conn(w, r)
-}
-
-//// chat start
+/* chat start */
 func Chat(w http.ResponseWriter, r *http.Request) { //we take responsewriter and *request as parameter
 	//public api point
 
@@ -117,9 +116,14 @@ func ChatBeatRecv(w http.ResponseWriter, r *http.Request) { //ChatBeatRecv takes
 
 }
 
-////// chat over
+/* chat over */
 
 func Hello(w http.ResponseWriter, r *http.Request) { //we take responsewriter and *request as parameter
 	w.WriteHeader(200)
 	_, _ = w.Write([]byte("hello"))
+}
+
+func Wit(w http.ResponseWriter, r *http.Request) { //we take responsewriter and *request as parameter
+
+	witai.Conn(w, r)
 }
