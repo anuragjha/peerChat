@@ -8,90 +8,110 @@
 
     <title>Chat Box</title>
     <meta name="description" content="chat">
-    <meta name="author" content="web-o-bot">
+    <meta name="author" content="ajha">
 
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <!-- angular js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 
+    <!-- font awesome
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+    -->
+    <!-- chatbox script and css -->
     <link rel="stylesheet" type="text/css" href="../../resources/css/chatBox.css">
+    <script src="../../resources/js/chatBox.js"></script>
 
 </head>
 
 <body>
+<div class="container-fluid h-100">
 
-    <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- As a link -->
+        <a class="navbar-brand mb-0 h1" href="">Chat Box - {{.IdDS.Id}}</a>
+    </nav>
 
-        <div class="row alert alert-dark" role="alert">
-            <h1 class="header"><b>Chat Box - {{.IdDS.Id}}</b></h1>
-        </div>
+    <form action="/chat" enctype="multipart/form-data" method="post">
 
-        <div class="row input-bar alert">
-
-            <form action="/chat" enctype="multipart/form-data" method="post">
-                <!--enctype="multipart/form-data"-->
-                <!--enctype="application/x-www-form-urlencoded"-->
-                <div class="row">
-                <div class="col">
-                    <div class="live-peers">
-                    <select name="peers" size="5" multiple>
+        <div class="form-row">
+            <div class="col-1">
+                <div class="form-group"> <!-- online users -->
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Peers</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <select name="peers" class="custom-select" multiple>
                         {{range $key, $value := .PeersDS.PeerMap }}
                             <option value="{{ $key }}">{{ $key }}</option>
                         {{end}}
                     </select>
-                </div>
-                </div>
-                <div class="col">
-                    <div class="text-bar">
-                        <input name="message" type="text" placeholder="having a good day ?"/>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="file-bar">
-                    <input type="file" name="uploadfile" />
-                </div>
-                </div>
-                <div class="col">
-                    <div class="submit-bar">
-                    <!--<input type="submit" value="submit" />-->
-                    <button type="submit" value="submit" class="btn btn-success">Submit</button>
-                </div>
-                </div>
-                </div>
-            </form>
-
-        </div>
-
-        <!--<div class="container">-->
-            <div class="row"> <!-- show-chat -->
-                <div class="col-sm-6 alert alert-primary" role="alert"><b>Message</b></div>
-                <div class="col-sm-3 alert alert-primary" role="alert"><b>File</b></div>
-                <div class="col alert alert-primary" role="alert"><b>From</b></div>
-                <div class="col alert alert-primary" role="alert"><b>To</b></div>
-                <!--<div class="col alert alert-primary" role="alert">Timestamp</div>-->
-
-                {{range .ChatsShow.ChatsShowList}}
-                    <div class="w-100"></div>
-                    <div class="col-sm-6 alert alert-info" style="margin-bottom: 0%">{{.Message}}</div>
-                    <div class="col-sm-3 alert alert-info" style="margin-bottom: 0%">{{.LoadedFileName}}</div>
-                    <div class="col alert alert-dark" style="margin-bottom: 0%">{{.From}}</div>
-                    <div class="col alert alert-dark" style="margin-bottom: 0%">{{.To}}</div>
-                    <!--   <div class="col alert alert-info" role="alert">{{.Timestamp}}</div> -->
-                {{end}}
-
-
+                </div> <!-- online users -->
             </div>
-        <!--</div>-->
+            <div class="col">
+                <div class="form-group"> <!-- show-chat -->
 
-    </div>
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th><b>Message</b></th>
+                            <th><b>File</b></th>
+                            <th><b>From</b></th>
+                            <th><b>To</b></th>
+                            <!--<div class="col alert alert-primary" role="alert">Timestamp</div>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{range .ChatsShow.ChatsShowList}}
+                            <tr>
+                                <td class="col-5">{{.Message}}</td>
+                                <td class="col-2">{{.LoadedFileName}}</td>
+                                <td class="col-1">{{.From}}</td>
+                                <td class="col-1">{{.To}}</td>
+                                <!--<td>{{.Timestamp}}</td> -->
+                            </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div> <!-- show-chat -->
 
-    <script src="../../resources/js/chatBox.js"></script>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                <div class="form-group"> <!-- input -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="file-bar">
+                                <input type="file" class="form-control-file" name="uploadfile" />
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="text-bar">
+                                <textarea name="message" type="text" class="form-control" placeholder="having a good day ?"></textarea>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="submit-bar">
+                                <!--<input type="submit" value="submit" />-->
+                                <button type="submit" value="submit" class="btn btn-success float-right">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- input -->
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>

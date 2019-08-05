@@ -151,7 +151,22 @@ func Begin(w http.ResponseWriter, r *http.Request, identity identity.Identity, p
 		isStarted = true
 	}
 
+	makeClientDir(identity.Id)
+
 	showChatsShow(w, identity, peerDS)
+
+}
+
+//makeClientDir creates a directory for the client
+func makeClientDir(id string) {
+	//CHATFILESSENTDIR = "/chat/files/" + "c" + os.Args[1] + "/sent/"
+	//CHATFILESRECVDIR = "/chat/files/" + "c" + os.Args[1] + "/recv/"
+	//CHATFILEPREFIX = "/chat/files/"+ "c" + os.Args[1] + "/chat-"
+
+	wd, _ := os.Getwd()
+	_ = os.MkdirAll(wd+"/chat/files/"+"c"+os.Args[1]+"/sent/", os.ModePerm)
+	_ = os.MkdirAll(wd+"/chat/files/"+"c"+os.Args[1]+"/recv/", os.ModePerm)
+	//_ = os.MkdirAll("/chat/files/"+ "c" + os.Args[1] + "/chat-", os.ModePerm)
 
 }
 
